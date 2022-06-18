@@ -27,6 +27,22 @@ namespace e_store_flowers_api.Controllers
             return await query.ToListAsync();
         }
 
+
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<Flower>>> FilterCategory(int categoryNo)
+        {
+            IQueryable<Flower> query = _context.Flowers;
+
+            if (categoryNo > 0)
+            {
+                query = query.Where(e => e.CategoryNo == categoryNo);
+            }
+            return await query.ToListAsync();
+        }
+
+
+
+
         public FlowersController(flower_etrade_dbContext context)
         {
             _context = context;
@@ -60,6 +76,30 @@ namespace e_store_flowers_api.Controllers
 
             return flower;
         }
+
+      /*  [HttpGet("get/{CategoryNo}")]
+        public async Task<ActionResult<Flower>> GetFlowerByCategoryId(int CategoryNo)
+        {
+            if (_context.Flowers == null)
+            {
+                return NotFound();
+            }
+            var flower = await _context.Flowers.FindAsync(CategoryNo);
+
+       
+            if (flower == null)
+            {
+                return NotFound();
+            }
+
+            if(flower.CategoryNo == CategoryNo)
+            {
+                return flower;
+            }
+
+            return NotFound();
+        }*/
+
 
         // PUT: api/Flowers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
