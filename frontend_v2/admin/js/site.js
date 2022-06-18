@@ -17,6 +17,8 @@ function _displayItemsforCategory(data) {
   categories = data
 }
 
+
+
 function getflowerItems() {
   fetch(uriFlowers)
     .then((response) => response.json())

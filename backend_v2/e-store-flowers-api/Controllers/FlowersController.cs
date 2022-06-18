@@ -15,6 +15,18 @@ namespace e_store_flowers_api.Controllers
     {
         private readonly flower_etrade_dbContext _context;
 
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Flower>>> Search(string flowerNameSearch)
+        {
+            IQueryable<Flower> query = _context.Flowers;
+
+            if(!string.IsNullOrEmpty(flowerNameSearch))
+            {
+                query = query.Where(e => e.FlowerName.Contains(flowerNameSearch));
+            }
+            return await query.ToListAsync();
+        }
+
         public FlowersController(flower_etrade_dbContext context)
         {
             _context = context;

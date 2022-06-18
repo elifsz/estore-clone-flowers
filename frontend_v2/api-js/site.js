@@ -70,3 +70,26 @@ function getFlowerFromCategory(categoryName) {
     }
   }
 }
+
+function getSearchFlower(searchInput){
+  var uriSearch = "https://localhost:7225/api/Flowers/search?flowerNameSearch";
+  fetch(`${uriSearch}=${searchInput}`)
+  .then((response) => response.json())
+  .then((data) => _display(data))
+  .catch((error) => console.error('Unable to get flowers.', error))
+}
+
+function searchFlower() {
+  console.log("fffff");
+  var searchInput = $("#searchId").val();
+  getSearchFlower(searchInput);
+ 
+}
+
+function _display(data) {
+  console.log(data);
+  var flowerUrl = `${data[0].flowerName}`;
+  flowerUrl = flowerUrl.toLowerCase(); 
+  var url = `http://localhost:3000/flowers/${flowerUrl}`;
+  window.location.assign(url);
+}
