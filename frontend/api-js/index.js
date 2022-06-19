@@ -30,9 +30,15 @@ let flowersByCategoryNoWedding = []
 function getFlower() {
   fetch(uriFlower)
   .then((response) => response.json())
+<<<<<<< Updated upstream
   .then((data) => _displayItemsforCategoryDetail(data))
   .catch((error) => console.error('Unable to get flowers.', error))
   console.log(data)
+=======
+  .then((data) => _displayFlower(data))
+  .catch((error) => console.error('Unable to get books.', error))
+  
+>>>>>>> Stashed changes
 }
 
 function getflowersByCategoryNo() {
@@ -62,29 +68,32 @@ function getCategory() {
 function _displayFlower(data) {
   let flowerInfo = data;
   let flowerHtml =  `
-  <div class="col-lg-4 col-sm-4">
+  <div class="col-lg-25 col-sm-5">
   <div class="box_main" >
-      <h4 class="shirt_text">${flowerInfo.flowerName}</h4>
-      <p class="price_text">
-      ${flowerInfo.flowerDescription}
-      ${flowerInfo.flowerPrice}
-      ${flowerInfo.deliveryTime}
-
-      </p>
       <div class="electronic_img">
-      <img src="images/flower.jpg" />
+      <img src="../images/gul.jpg" />
       </div>
       <div class="btn_main">
       <div class="buy_bt"><a href="#">Buy Now</a></div>
       </div>
 </div>
 </div>
+   <div class="col-lg-25 col-sm-5">
+         
+   <h4 class="shirt_text">${flowerInfo.flowerName}</h4>
+   <p class="price_text"> <br/>
+   ${flowerInfo.flowerDescription} <br/> <br/>
+   ${flowerInfo.price} $ <br/> <br/>
+ Delivery Time:  ${flowerInfo.deliveryTime} 
+
+   </p>
+   </div>
 </div>
 `
 
 document
-.querySelector('#category_list')
-.insertAdjacentHTML('afterbegin', categoryHtml)
+.querySelector('#flower')
+.insertAdjacentHTML('afterbegin', flowerHtml)
 }
 
 function _displayItemsforCategory(data) {
