@@ -31,7 +31,7 @@ function getFlower() {
   fetch(uriFlower)
   .then((response) => response.json())
   .then((data) => _displayItemsforCategoryDetail(data))
-  .catch((error) => console.error('Unable to get books.', error))
+  .catch((error) => console.error('Unable to get flowers.', error))
   console.log(data)
 }
 
@@ -39,7 +39,7 @@ function getflowersByCategoryNo() {
   fetch(uriflowersByCategoryNo)
     .then((response) => response.json())
     .then((data) => _displayItemsforCategoryDetail(data))
-    .catch((error) => console.error('Unable to get books.', error))
+    .catch((error) => console.error('Unable to get items.', error))
   console.log(flowersByCategoryNo)
 }
 
@@ -47,7 +47,7 @@ function getflowersByCategoryNoWedding() {
   fetch(uriflowersByCategoryNoWedding)
     .then((response) => response.json())
     .then((data) => _displayItemsforCategoryDetail(data))
-    .catch((error) => console.error('Unable to get books.', error))
+    .catch((error) => console.error('Unable to get items.', error))
   console.log(flowersByCategoryNoWedding)
 }
 
@@ -55,7 +55,7 @@ function getCategory() {
   fetch(uriCategory)
     .then((response) => response.json())
     .then((data) => _displayItemsforCategory(data))
-    .catch((error) => console.error('Unable to get books.', error))
+    .catch((error) => console.error('Unable to get items.', error))
   console.log(categories)
 }
 
