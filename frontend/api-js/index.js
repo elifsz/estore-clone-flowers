@@ -5,6 +5,8 @@ const uriflowersByCategoryNoWedding =
   "https://localhost:7225/api/Flowers/filter?categoryNo=1";
 const uriFlower =
   "https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";
+
+const uriFlowers = "https://localhost:7225/api/Flowers";
 /*let categories = [
   {
     catergoryNo: 1,
@@ -28,12 +30,27 @@ const uriFlower =
 let categories = [];
 let flowersByCategoryNo = [];
 let flowersByCategoryNoWedding = [];
+let flowers = [];
 
 function getFlower() {
   fetch(uriFlower)
     .then((response) => response.json())
     .then((data) => _displayFlower(data))
     .catch((error) => console.error("Unable to get books.", error));
+}
+
+function getflowerItems() {
+
+  fetch(uriFlowers)
+    .then((response) => response.json())
+    .then((data) => _setFlowerItems(data))
+    .catch((error) => console.error('Unable to get flowers.', error))
+
+}
+
+function _setFlowerItems(data) {
+  flowers = data;
+  console.log(flowers+"benü");
 }
 
 function getflowersByCategoryNo() {
@@ -82,8 +99,8 @@ Price: ${flowerInfo.price} $ <br/> <br/>
 Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/>
 </p>
 </div>
-</br> </br>
-<div class="col-lg-35 col-sm-5"><button>Buy Now</button></div>
+
+<div class="buy_bt" id="buynow"><a href="#">Buy Now</a></div>
 
 
 </div>
@@ -92,6 +109,14 @@ Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/>
   document
     .querySelector("#flower")
     .insertAdjacentHTML("afterbegin", flowerHtml);
+    document.getElementById("buynow").setAttribute('onclick',`addCart("${flowerInfo.flowerId}")`);
+    console.log(flowerInfo.flowerId);
+}
+function addCart(id) {
+  console.log("butonum");
+  const item = flowers.find((item) => item.flowerId === id);
+  console.log(item);
+  console.log(flowers);
 }
 
 function _displayItemsforCategory(data) {
