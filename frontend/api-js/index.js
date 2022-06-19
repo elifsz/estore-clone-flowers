@@ -2,7 +2,7 @@
 const uriCategory = 'https://localhost:7225/api/Categories'
 const uriflowersByCategoryNo = 'https://localhost:7225/api/Flowers/filter?categoryNo=2'
 const uriflowersByCategoryNoWedding = 'https://localhost:7225/api/Flowers/filter?categoryNo=1'
-
+const uriFlower = "https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3"
 /*let categories = [
   {
     catergoryNo: 1,
@@ -27,6 +27,14 @@ let categories = []
 let flowersByCategoryNo = []
 let flowersByCategoryNoWedding = []
 
+function getFlower() {
+  fetch(uriFlower)
+  .then((response) => response.json())
+  .then((data) => _displayItemsforCategoryDetail(data))
+  .catch((error) => console.error('Unable to get books.', error))
+  console.log(data)
+}
+
 function getflowersByCategoryNo() {
   fetch(uriflowersByCategoryNo)
     .then((response) => response.json())
@@ -49,6 +57,34 @@ function getCategory() {
     .then((data) => _displayItemsforCategory(data))
     .catch((error) => console.error('Unable to get books.', error))
   console.log(categories)
+}
+
+function _displayFlower(data) {
+  let flowerInfo = data;
+  let flowerHtml =  `
+  <div class="col-lg-4 col-sm-4">
+  <div class="box_main" >
+      <h4 class="shirt_text">${flowerInfo.flowerName}</h4>
+      <p class="price_text">
+      ${flowerInfo.flowerDescription}
+      ${flowerInfo.flowerPrice}
+      ${flowerInfo.deliveryTime}
+
+      </p>
+      <div class="electronic_img">
+      <img src="images/flower.jpg" />
+      </div>
+      <div class="btn_main">
+      <div class="buy_bt"><a href="#">Buy Now</a></div>
+      </div>
+</div>
+</div>
+</div>
+`
+
+document
+.querySelector('#category_list')
+.insertAdjacentHTML('afterbegin', categoryHtml)
 }
 
 function _displayItemsforCategory(data) {
