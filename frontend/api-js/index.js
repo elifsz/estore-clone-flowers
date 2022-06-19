@@ -70,7 +70,6 @@ function _displayFlower(data) {
       <img src="../images/gul.jpg" />
       </div>
       <div class="btn_main">
-      <div class="buy_bt"><a href="#">Buy Now</a></div>
       </div>
 </div>
 </div>
@@ -83,6 +82,9 @@ Price: ${flowerInfo.price} $ <br/> <br/>
 Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/>
 </p>
 </div>
+</br> </br>
+<div class="col-lg-35 col-sm-5"><button>Buy Now</button></div>
+
 
 </div>
 `;
