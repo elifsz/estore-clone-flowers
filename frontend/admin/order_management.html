@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <title>Order Management</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-6">
+              <h2>
+                Orders
+              </h2>
+                <a href="../index.html">
+                  <img src="../images/iris (1).png" />
+                </a>
+            </div>
+         
+          </div>
+        </div>
+        <table class="table table-striped table-hover w-auto">
+          <thead>
+            <tr>
+              <th>OrderNumber</th>
+              <th>UserId</th>
+              <th>OrderDate</th>
+              <th>OrderTotalPrice</th>
+            </tr>
+          </thead>
+          <tbody id="orders"></tbody>
+        </table>
+        <div class="clearfix">
+          <div id="counter" class="hint-text"></div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Edit Modal HTML -->
+    <div id="editorderModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="javascript:void(0);" onsubmit="updateorderItem()">
+            <input type="hidden" id="edit-id" />
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Order</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>OrderNumber</label>
+                <input
+                  type="text"
+                  id="edit-ordernumber"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>UserId</label>
+                <input
+                  type="text"
+                  id="edit-userıd"
+                  placeholder="Enter User ID"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>OrderDate</label>
+                <input
+                  type="text"
+                  id="edit-orderdate"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>OrderTotalPrice</label>
+                <input
+                  type="text"
+                  id="edit-orderTotalPrice"
+                  class="form-control"
+                  required
+                />
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <input
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                value="Cancel"
+              />
+            </div>
+              <input type="submit" class="btn btn-info" value="Save" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Delete Modal HTML -->
+    <div id="deleteorderModal" class="modal fade">
+      <input type="hidden" id="delete-id" />
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="javascript:void(0);" onsubmit="deleteorderItem()">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete order</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete this Order?</p>
+              <p class="text-warning">
+                <small>This action cannot be undone.</small>
+              </p>
+            </div>
+            <div class="modal-footer">
+              <input
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                value="Cancel"
+              />
+              <input type="submit" class="btn btn-danger" value="Delete" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="js/index.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+      getorderItems()
+
+      $('#addorderModal').submit(function () {
+        $('#addorderModal').modal('hide')
+      })
+
+      $('#editorderModal').submit(function () {
+        $('#editorderModal').modal('hide')
+      })
+
+      $('#deleteorderModal').submit(function () {
+        $('#deleteorderModal').modal('hide')
+      })
+    </script>
+  </body>
+</html>
