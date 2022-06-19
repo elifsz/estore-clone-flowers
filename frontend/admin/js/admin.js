@@ -1,16 +1,20 @@
 const uriFlowers = 'https://localhost:7225/api/Flowers'
+const uriOrders = 'https://localhost:7225/api/OrderLists'
 const uriCategory = 'https://localhost:7225/api/Categories'
 let editFlowerId = ''
 let deleteFlowerId = ''
 let flowers = []
 let categories = []
+let editOrderId = ''
+let deleteOrderId = ''
+let orders = []
 
 
 function getCategory() {
   fetch(uriCategory)
     .then((response) => response.json())
     .then((data) => _displayItemsforCategory(data))
-    .catch((error) => console.error('Unable to get books.', error))
+    .catch((error) => console.error('Unable to get category.', error))
   console.log(categories)
 }
 function _displayItemsforCategory(data) {
@@ -24,6 +28,13 @@ function getflowerItems() {
     .then((response) => response.json())
     .then((data) => _displayItems(data))
     .catch((error) => console.error('Unable to get flowers.', error))
+}
+
+function getorderItems() {
+  fetch(uriOrders)
+    .then((response) => response.json())
+    .then((data) => _displayItems(data))
+    .catch((error) => console.error('Unable to get orders.', error))
 }
 
 function addflowerItem() {
@@ -76,12 +87,31 @@ function deleteflowerItem() {
     .catch((error) => console.error('Unable to delete flower.', error))
 }
 
+function deleteOrderItem() {
+  //const element = document.getElementById('delete-flower');
+  // let itemId = document.getElementById('delete-flower').getAttribute('delete-flower-id');
+  let itemId = deleteOrderId
+  fetch(`${uriFlowers}/${itemId}`, {
+    method: 'DELETE',
+  })
+    .then(() => getorderItems())
+    .catch((error) => console.error('Unable to delete order.', error))
+}
+
 function displayDeleteForm(id) {
   deleteFlowerId = id
   const item = flowers.find((item) => item.flowerId === id)
   document
     .getElementById('delete-flower')
     .getAttribute('delete-flower-id') = item.flowerId
+}
+
+function displayOrderDeleteForm(id) {
+  deleteOrderId = id
+  const item = orders.find((item) => item.orderId === id)
+  document
+    .getElementById('delete-order')
+    .getAttribute('delete-order-id') = item.orderId
 }
 
 function displayEditForm(id) {
@@ -95,6 +125,17 @@ function displayEditForm(id) {
   document.getElementById('edit-category').value = item.categoryNo
   document.getElementById('edit-delivery').value = item.deliveryTime
   document.getElementById('edit-description').value = item.flowerDescription
+}
+
+function displayOrderEditForm(id) {
+  const item = orders.find((item) => item.orderId === id)
+  editOrderId = id
+
+  document.getElementById('edit-ordernumber').value = item.ordernumber
+  document.getElementById('edit-userıd').value = item.userıd
+  document.getElementById('edit-orderdate').value = item.orderdate
+  document.getElementById('edit-orderTotalPrice').value = item.orderTotalPrice
+
 }
 
 function updateflowerItem() {
@@ -125,6 +166,34 @@ function updateflowerItem() {
 
   return false
 }
+
+
+function updateorderItem() {
+  let itemId = editOrderId
+  const item = {
+    orderId: itemId,
+    ordernumber: parseInt(document.getElementById('edit-ordernumber').value.trim()),
+    userıd: parseInt(document.getElementById('edit-userıd').value.trim()),
+    orderdate: document.getElementById('edit-orderdate').value.trim(),
+    orderTotalPrice: parseInt(document.getElementById('edit-orderTotalPrice').value.trim()),
+  }
+
+  fetch(`${uriOrders}/${itemId}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(item),
+  })
+    .then(() => getorderItems())
+    .catch((error) => console.error('Unable to update item.', error))
+
+  return false
+}
+
+
+
 
 function _displayCount(itemCount) {
   const name = itemCount === 1 ? 'entry' : 'entries'
@@ -222,4 +291,78 @@ function _displayItems(data) {
   })
 
   flowers = data
+}
+
+
+function _displayOrdersItems(data) {
+  console.log(data)
+  getCategory();
+  const tBody = document.getElementById('orders')
+  tBody.innerHTML = ''
+  _displayCount(data.length)
+  const button = document.createElement('button')
+
+  data.forEach((item) => {
+    let editButton = document.createElement('a')
+    editButton.href = '#editorderModal'
+    editButton.className = 'edit'
+    editButton.id = 'edit-order'
+    editButton.setAttribute('onclick', `displayEditForm(${item.orderId})`)
+    editButton.addEventListener(
+      'click',
+      function () {
+        displayEditForm(item.orderId)
+      },
+      false,
+    )
+
+    editButton.setAttribute('data-toggle', 'modal')
+    editButton.setAttribute('edit-order-id', `${item.orderId}`)
+
+    editButton.innerHTML =
+      "<i class='material-icons' data-toggle='tooltip' title='Edit'>&#xE254;</i>"
+
+    let deleteButton = document.createElement('a')
+    deleteButton.href = '#deleteorderModal'
+    deleteButton.className = 'delete'
+    deleteButton.id = 'delete-order'
+    deleteButton.setAttribute('onclick', `displayDeleteForm(${item.orderId})`)
+    deleteButton.addEventListener(
+      'click',
+      function () {
+        displayDeleteForm(item.orderId)
+      },
+      false,
+    )
+
+    deleteButton.setAttribute('data-toggle', 'modal')
+    deleteButton.setAttribute('delete-order-id', `${item.orderId}`)
+
+    deleteButton.innerHTML =
+      "<i class='material-icons' data-toggle='tooltip' title='Delete'>&#xE872;</i>"
+
+    let tr = tBody.insertRow()
+
+    let td1 = tr.insertCell(0)
+    let textOrderNumber = document.createTextNode(item.orderNumber)
+    td1.appendChild(textOrderNumber)
+
+    let td2 = tr.insertCell(1)
+    let textUserID = document.createTextNode(item.userID)
+    td2.appendChild(textUserID)
+
+    let td3 = tr.insertCell(2)
+    let textOrderDate = document.createTextNode(item.orderDate)
+    td3.appendChild(textOrderDate)
+
+    let td4 = tr.insertCell(3)
+    let textOrderTotalPrice = document.createTextNode(item.orderTotalPrice)
+    td4.appendChild(textOrderTotalPrice)
+
+    let td5 = tr.insertCell(4)
+    td5.appendChild(editButton)
+    td5.appendChild(deleteButton)
+  })
+
+  orders = data
 }
