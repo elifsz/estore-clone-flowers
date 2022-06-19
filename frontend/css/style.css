@@ -214,7 +214,7 @@ button {
 .banner_bg_main {
     width: 100%;
     float: left;
-    background-image: url(../images/banner-bg.png);
+    background-image: url(../images/bg2.jpg);
     height: auto;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -250,12 +250,12 @@ button {
 .custom_menu li {
     float: left;
     font-size: 16px;
-    color: #f1f1f1;
+    color: #007500;
     padding: 6px 10px 0px 10px;
 }
 
 .custom_menu li a {
-    color: #f1f1f1;
+    color: #007500;
 }
 
 .custom_menu li a:hover {
@@ -315,7 +315,7 @@ button {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 20px;
-    color: #ffffff;
+    color: #007500;
     display: block;
     transition: 0.3s;
 }
@@ -343,7 +343,7 @@ button {
 
 .toggle_icon {
     cursor: pointer;
-    color: #ffffff;
+    color: #007500;
     order: 2;
 }
 
@@ -365,13 +365,13 @@ button {
 }
 
 .btn-secondary {
-    color: #fff;
+    color: #007500;
     background-color: #30302e;
     border-color: #30302e;
 }
 
 .btn-secondary:hover {
-    color: #fff;
+    color: #007500;
     background-color: #30302e;
     border-color: #30302e;
 }
@@ -409,7 +409,7 @@ button {
     line-height: 2.375rem;
     text-align: center;
     pointer-events: none;
-    color: #aaa;
+    color: #007500;
 }
 
 
@@ -429,14 +429,14 @@ button {
 .login_menu li {
     float: left;
     font-size: 16px;
-    color: #ffffff;
+    color: #007500;
     text-transform: uppercase;
     padding-left: 10px;
     padding-top: 4px;
 }
 
 .login_menu li a {
-    color: #ffffff;
+    color: #007500;
 }
 
 .login_menu li a:hover {
@@ -453,7 +453,7 @@ button {
 .lang_box {
     display: flex;
     float: right;
-    background: #fff;
+    background: #007500;
     border-radius: 5px;
     margin-right: 20px;
 }
@@ -486,7 +486,7 @@ a:hover {
 .banner_taital {
     width: 100%;
     font-size: 60px;
-    color: #ffffff;
+    color:#007500;
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
@@ -502,7 +502,7 @@ a:hover {
     width: 100%;
     float: left;
     font-size: 16px;
-    color: #ffffff;
+    color: #007500;
     background-color: #252525;
     text-align: center;
     padding: 10px 0px;
@@ -513,7 +513,7 @@ a:hover {
 
 .buynow_bt a:hover {
     background-color: #f26522;
-    color: #ffffff;
+    color: #007500;
 }
 
 #my_slider a.carousel-control-next {
@@ -541,7 +541,7 @@ a:hover {
 #my_slider .carousel-control-next:hover,
 #my_slider .carousel-control-prev:focus,
 #my_slider .carousel-control-prev:hover {
-    color: #fff;
+    color: #007500;
 }
 
 
@@ -559,7 +559,7 @@ a:hover {
 .fashion_taital {
     width: 100%;
     font-size: 40px;
-    color: #30302e;
+    color: #007500;
     text-align: center;
     font-weight: bold;
 }
@@ -574,7 +574,7 @@ a:hover {
     background-color: #ffffff;
     height: auto;
     padding: 20px;
-    box-shadow: 0px 0 30px 10px #f0f0f0;
+    box-shadow: 0px 0 30px 10px #ffffff;
     margin-bottom: 20px;
 }
 
@@ -662,14 +662,14 @@ a:hover {
     background-color: #30302e;
     opacity: 1;
     font-size: 30px;
-    color: #ffffff;
+    color: #007500;
 }
 
 #main_slider .carousel-control-next:focus,
 #main_slider .carousel-control-next:hover,
 #main_slider .carousel-control-prev:focus,
 #main_slider .carousel-control-prev:hover {
-    color: #fff;
+    color: #007500;
     background-color: #f26522;
 }
 
@@ -703,7 +703,7 @@ a:hover {
     background-color: #30302e;
     opacity: 1;
     font-size: 30px;
-    color: #ffffff;
+    color: #007500;
 }
 
 #electronic_main_slider .carousel-control-next:focus,
@@ -750,14 +750,14 @@ a:hover {
     background-color: #30302e;
     opacity: 1;
     font-size: 30px;
-    color: #ffffff;
+    color: #007500;
 }
 
 #jewellery_main_slider .carousel-control-next:focus,
 #jewellery_main_slider .carousel-control-next:hover,
 #jewellery_main_slider .carousel-control-prev:focus,
 #jewellery_main_slider .carousel-control-prev:hover {
-    color: #fff;
+    color: #007500;
     background-color: #f26522;
 }
 
@@ -831,14 +831,14 @@ a:hover {
     margin: 0 auto;
     text-align: center;
     display: flex;
-    border-bottom: 1px solid #ffffff !important;
+    border-bottom: 1px solid #007500 !important;
 }
 
 .mail_bt {
     width: 100%;
     float: left;
     font-size: 18px;
-    color: #fff;
+    color: #007500;
     background-color: transparent;
     padding: 5px 0px 5px 0px;
     height: 60px;

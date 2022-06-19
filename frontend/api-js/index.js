@@ -80,7 +80,7 @@ function _displayItemsforCategoryDetail(data) {
                 <div class="box_main" >
                     <h4 class="shirt_text">${flowersByCategoryNo[i].flowerName}</h4>
                     <p class="price_text">
-                    ${flowersByCategoryNo[i].price}
+                    ${flowersByCategoryNo[i].price} $ <br/>
                     ${flowersByCategoryNo[i].flowerDescription}
                     </p>
                     <div class="electronic_img">
