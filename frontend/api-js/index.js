@@ -98,7 +98,7 @@ function _displayItemsforCategoryDetail(data) {
                     </div>
                     <div class="btn_main">
                     <div class="buy_bt"><a href="#">Buy Now</a></div>
-                    <div class="seemore_bt"><a href="categories/${flowersByCategoryNo[i].categoryName}_category.html">See More</a></div>
+                    <div class="seemore_bt"><a href="http://localhost:3000/flowers/rose">See More</a></div>
                     </div>
             </div>
             </div>
@@ -127,7 +127,7 @@ function _displayItemsforCategoryDetailWedding(data) {
                     </div>
                     <div class="btn_main">
                     <div class="buy_bt"><a href="#">Buy Now</a></div>
-                    <div class="seemore_bt"><a href="categories/${flowersByCategoryNoWedding[i].categoryName}_category.html">See More</a></div>
+                    <div class="seemore_bt"><a href="http://localhost:3000/flowers/rose">See More</a></div>
                     </div>
             </div>
             </div>
