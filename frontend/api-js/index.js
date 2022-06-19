@@ -1,6 +1,7 @@
 
 const uriCategory = 'https://localhost:7225/api/Categories'
 const uriflowersByCategoryNo = 'https://localhost:7225/api/Flowers/filter?categoryNo=2'
+const uriflowersByCategoryNoWedding = 'https://localhost:7225/api/Flowers/filter?categoryNo=1'
 
 /*let categories = [
   {
@@ -24,6 +25,7 @@ const uriflowersByCategoryNo = 'https://localhost:7225/api/Flowers/filter?catego
 ]*/
 let categories = []
 let flowersByCategoryNo = []
+let flowersByCategoryNoWedding = []
 
 function getflowersByCategoryNo() {
   fetch(uriflowersByCategoryNo)
@@ -31,6 +33,14 @@ function getflowersByCategoryNo() {
     .then((data) => _displayItemsforCategoryDetail(data))
     .catch((error) => console.error('Unable to get books.', error))
   console.log(flowersByCategoryNo)
+}
+
+function getflowersByCategoryNoWedding() {
+  fetch(uriflowersByCategoryNoWedding)
+    .then((response) => response.json())
+    .then((data) => _displayItemsforCategoryDetail(data))
+    .catch((error) => console.error('Unable to get books.', error))
+  console.log(flowersByCategoryNoWedding)
 }
 
 function getCategory() {
@@ -89,6 +99,35 @@ function _displayItemsforCategoryDetail(data) {
                     <div class="btn_main">
                     <div class="buy_bt"><a href="#">Buy Now</a></div>
                     <div class="seemore_bt"><a href="categories/${flowersByCategoryNo[i].categoryName}_category.html">See More</a></div>
+                    </div>
+            </div>
+            </div>
+            </div>
+            `
+  }
+  document
+    .querySelector('#categoryDetail')
+    .insertAdjacentHTML('afterbegin', categoryHtml)
+}
+
+function _displayItemsforCategoryDetailWedding(data) {
+  flowersByCategoryNoWedding = data
+  let categoryHtml =''
+  for (let i = 0; i < flowersByCategoryNoWedding.length; i++) {
+    categoryHtml += `
+                <div class="col-lg-4 col-sm-4">
+                <div class="box_main" >
+                    <h4 class="shirt_text">${flowersByCategoryNoWedding[i].flowerName}</h4>
+                    <p class="price_text">
+                    ${flowersByCategoryNoWedding[i].price} $ <br/>
+                    ${flowersByCategoryNoWedding[i].flowerDescription}
+                    </p>
+                    <div class="electronic_img">
+                    <img src="../images/gul.jpg" />
+                    </div>
+                    <div class="btn_main">
+                    <div class="buy_bt"><a href="#">Buy Now</a></div>
+                    <div class="seemore_bt"><a href="categories/${flowersByCategoryNoWedding[i].categoryName}_category.html">See More</a></div>
                     </div>
             </div>
             </div>
