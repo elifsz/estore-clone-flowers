@@ -8,7 +8,7 @@ var devCorsPolicy = "devCorsPolicy";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(devCorsPolicy, builder => {
-        builder.WithOrigins("http://localhost:8000").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+        builder.WithOrigins("http://localhost:3000").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
         //builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
         //builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
         //builder.SetIsOriginAllowed(origin => true);
@@ -34,9 +34,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors(devCorsPolicy);
+    
 }
-
+app.UseCors(devCorsPolicy);
 app.UseHttpsRedirection();
 
 app.UseCors();
