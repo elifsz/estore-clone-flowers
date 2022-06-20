@@ -8,6 +8,7 @@ const uriflowersByCategoryNoWedding =
 const uriFlower = "https://localhost:7225/api/Flowers/d16f59ab-9ae2-4ff7-a7a5-01834ca6ea5d";
 const uriFlowers = "https://localhost:7225/api/Flowers";
 const orderurl = "https://localhost:7225/api/OrderDetails";
+const uriLogin = "https://localhost:7225/api/Users/login?email&password"
 let categories = [];
 let flowersByCategoryNo = [];
 let flowersByCategoryNoWedding = [];
@@ -262,10 +263,37 @@ function searchFlower() {
   getSearchFlower(searchInput);
 }
 
+
+function getLogin(email, password) {
+  console.log("fffff");
+  var uriLogin = "https://localhost:7225/api/Users";
+  fetch(`${uriLogin}=${email, password}`)
+    .then((response) => response.json())
+    .then((data) => _displayLogin(data))
+    .catch((error) => console.error("Unable to get users.", error));
+}
+
+function login() {
+  console.log("fffff");
+  var email = $("#email").val();
+  var password = $("#password").val();
+  getLogin(email,password);
+
+}
+
+
 function _display(data) {
   console.log(data);
   var flowerUrl = `${data[0].flowerName}`;
   flowerUrl = flowerUrl.toLowerCase();
   var url = `http://localhost:3000/flowers/${flowerUrl}`;
+  window.location.assign(url);
+}
+
+function _displayLogin(data) {
+  console.log(data);
+  var userUrl = `${data[0].email & data[0].password}`;
+  userUrl = userUrl.toLowerCase();
+  var url = `http://localhost:3000/users/${userUrl}`;
   window.location.assign(url);
 }
