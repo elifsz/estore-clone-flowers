@@ -33,7 +33,7 @@ function getflowerItems() {
 function getorderItems() {
   fetch(uriOrders)
     .then((response) => response.json())
-    .then((data) => _displayItems(data))
+    .then((data) => _displayOrdersItems(data))
     .catch((error) => console.error('Unable to get orders.', error))
 }
 
