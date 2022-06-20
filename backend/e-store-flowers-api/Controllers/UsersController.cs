@@ -119,5 +119,40 @@ namespace e_store_flowers_api.Controllers
         {
             return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
         }
+
+
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> LoginByEmail(String email, String password)
+        {
+            if (_context.Users == null)
+            {
+                return Problem("Entity set 'flower_etrade_dbContext.Users' is null.");
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (user.Password != password)
+            {
+                return NotFound();
+            }
+
+            if (user.UserRoleNo == 1)
+            {
+                return Ok("admin");
+            }
+            else
+            {
+                return Ok("user");
+            }
+
+        }
+      
+
+
     }
 }
