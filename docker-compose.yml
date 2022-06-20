@@ -1,0 +1,21 @@
+version: '3'
+services:
+    database_sql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        environment:
+            ACCEPT_EULA: '{"Y"}'
+            SA_PASSWORD: '{"yourStrong(!)Password"}'
+        ports:
+            ["1433:1433"]
+    backend:
+      depends_on:
+        - database_sql
+      image: 17050111056/e-store-flowers-api
+      ports:
+        ["8080:80"]
+    frontend:
+      image: 17050111056/e-store-flower-frontend
+      ports:
+        ["3000:3000"]
+      depends_on:
+        - backend
