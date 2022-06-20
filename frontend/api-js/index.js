@@ -265,18 +265,25 @@ function searchFlower() {
 
 
 function getLogin(email, password) {
-  console.log("fffff");
-  var uriLogin = "https://localhost:7225/api/Users";
-  fetch(`${uriLogin}=${email, password}`)
-    .then((response) => response.json())
-    .then((data) => _displayLogin(data))
-    .catch((error) => console.error("Unable to get users.", error));
+  var uriLogin =`https://localhost:7225/api/Users/login?email=${email}&password=${password}`;
+
+    fetch(uriLogin).then((res)=>{
+      return res.text();
+    }).then((text)=>{
+     if(text=="admin"){
+        window.location.href = "admin/flower_management.html";
+     }else if(text=="user"){
+        window.location.href = "index.html";
+         
+     }else{
+        alert("Wrong email or password");
+     }
+    })
 }
 
 function login() {
-  console.log("fffff");
-  var email = $("#email").val();
-  var password = $("#password").val();
+  var email = $("#user_email").val();
+  var password = $("#user_password").val();
   getLogin(email,password);
 
 }
