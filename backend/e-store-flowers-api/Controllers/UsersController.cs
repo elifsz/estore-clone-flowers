@@ -121,7 +121,7 @@ namespace e_store_flowers_api.Controllers
         }
 
 
-        [HttpPost("login")]
+        [HttpGet("login")]
         public async Task<ActionResult<string>> LoginByEmail(String email, String password)
         {
             if (_context.Users == null)
