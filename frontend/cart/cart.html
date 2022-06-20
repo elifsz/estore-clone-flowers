@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
-</head>
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+        <meta content="utf-8" http-equiv="encoding" />
+        <title>Cart Details</title>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/site.css" />
+      </head>
 <body>
-    
+    <div class="container">
+        <div class="table-wrapper">
+          <div class="table-title">
+            <div class="row">
+              <div class="col-sm-6">
+                <h2>
+                  Card
+                  <b>Details</b>
+                </h2>
+                  <a href="../index.html">
+                    <img src="../images/iris (1).png" />
+                  </a>
+              </div>
+            </div>
+          </div>
+          <table class="table table-striped table-hover w-auto">
+            <thead>
+              <tr>
+                <th>Flower</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody id="card_details"></tbody>
+          </table>
+          <div class="clearfix">
+            <div id="counter" class="hint-text"></div>
+          </div>
+        </div>
+      </div>
+      <script src="../api-js/index.js" asp-append-version="true"></script>
+      <script type="text/javascript">
+        getOrderDetails()
+      </script>
 </body>
 </html>

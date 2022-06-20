@@ -3,30 +3,11 @@ const uriflowersByCategoryNo =
   "https://localhost:7225/api/Flowers/filter?categoryNo=2";
 const uriflowersByCategoryNoWedding =
   "https://localhost:7225/api/Flowers/filter?categoryNo=1";
-const uriFlower =
-  "https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";
-
+/*const uriFlower =
+  "https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";*/
+const uriFlower = "https://localhost:7225/api/Flowers/d16f59ab-9ae2-4ff7-a7a5-01834ca6ea5d";
 const uriFlowers = "https://localhost:7225/api/Flowers";
-/*let categories = [
-  {
-    catergoryNo: 1,
-    categoryName: 'Wedding',
-    categoryImage: null,
-    categoryDescription: 'Wedding Flowers',
-  },
-  {
-    catergoryNo: 2,
-    categoryName: 'Birthday',
-    categoryImage: null,
-    categoryDescription: 'Birthday Flowers',
-  },
-  {
-    catergoryNo: 3,
-    categoryName: 'Birthday',
-    categoryImage: null,
-    categoryDescription: 'Birthday Flowers',
-  },
-]*/
+const orderurl = "https://localhost:7225/api/OrderDetails";
 let categories = [];
 let flowersByCategoryNo = [];
 let flowersByCategoryNoWedding = [];
@@ -96,15 +77,10 @@ function _displayFlower(data) {
 <p class="price_text">
 ${flowerInfo.flowerDescription} <br/> <br/>
 Price: ${flowerInfo.price} $ <br/> <br/>
-Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/>
-</p>
+Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/></p>
+<div><button class="buy_bt" id="buynow">Buy Now<button/></div>
 </div>
-
-<div class="buy_bt" id="buynow"><a href="#">Buy Now</a></div>
-
-
-</div>
-`;
+</div> `;
 
   document
     .querySelector("#flower")
@@ -112,11 +88,69 @@ Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/>
     document.getElementById("buynow").setAttribute('onclick',`addCart("${flowerInfo.flowerId}")`);
     console.log(flowerInfo.flowerId);
 }
+let  cart_url_flower;
 function addCart(id) {
-  console.log("butonum");
-  const item = flowers.find((item) => item.flowerId === id);
-  console.log(item);
-  console.log(flowers);
+  cart_url_flower = uriFlowers + "/" + id;
+  fetch(cart_url_flower)
+    .then((response) => response.json())
+    .then((data) => addingCart(data))
+    .catch((error) => console.error('Unable to get flowers.', error))
+}
+
+function addingCart(data){
+  console.log(data);
+  const item = {
+    FlowerId: data.flowerId,
+    FlowerPrice: data.price,
+    FlowerQuantity: 1,
+    TotalPrice: data.price,
+    OrderListId: "e6437e80-a264-463b-aee7-a36a0eec9e0a",
+  }
+  fetch(orderurl, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(item),
+  })
+    .then((response) => response.json())
+    .then(() => {
+      getOrderDetails()
+    })
+    .catch((error) => console.error('Unable to add flower.', error))
+}
+
+function getOrderDetails(){
+  fetch("https://localhost:7225/api/OrderDetails")
+    .then((response) => response.json())
+    .then((data) => _displayOrderDetails(data))
+    .catch((error) => console.error("Unable to get books.", error));
+}
+
+function _displayOrderDetails(data) {
+  let orderDetails = data;
+  console.log(orderDetails);
+  const tBody = document.getElementById('card_details');
+  tBody.innerHTML = ''
+  data.forEach((item) => {
+  let tr = tBody.insertRow()
+  let td1 = tr.insertCell()
+  let flower = document.createTextNode(item.flowerId)
+  td1.appendChild(flower)
+
+  let td2 = tr.insertCell()
+  let flower2 = document.createTextNode(item.flowerPrice)
+  td2.appendChild(flower2)
+
+  let td3 = tr.insertCell()
+  let flower3 = document.createTextNode(item.flowerQuantity)
+  td3.appendChild(flower3)
+
+  let td4 = tr.insertCell()
+  let flower4 = document.createTextNode(item.totalPrice)
+  td4.appendChild(flower4)
+  })
 }
 
 function _displayItemsforCategory(data) {
