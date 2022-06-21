@@ -1,6 +1,7 @@
 const uriFlowers = 'https://localhost:7225/api/Flowers'
 const uriOrders = 'https://localhost:7225/api/OrderLists'
 const uriCategory = 'https://localhost:7225/api/Categories'
+const uriStatus = 'https://localhost:7225/api/Status/1'
 let editFlowerId = ''
 let deleteFlowerId = ''
 let flowers = []
@@ -28,6 +29,14 @@ function getflowerItems() {
     .then((response) => response.json())
     .then((data) => _displayItems(data))
     .catch((error) => console.error('Unable to get flowers.', error))
+}
+
+function getStatus() {
+  fetch(uriStatus)
+    .then((response) => response.json())
+    .then((data) => _displayStatus(data))
+    .catch((error) => console.error('Unable to get status.', error))
+    console.log("get status")
 }
 
 function getorderItems() {
@@ -97,6 +106,14 @@ function deleteOrderItem() {
   })
     .then(() => getorderItems())
     .catch((error) => console.error('Unable to delete order.', error))
+}
+
+function _displayStatus(data) {
+  console.log(data);
+  console.log("status")
+  var status = `${data.statusName}`;
+  console.log(status);
+
 }
 
 function displayDeleteForm(id) {
