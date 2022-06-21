@@ -352,12 +352,16 @@ function _displayOrdersItems(data) {
     td3.appendChild(textOrderDate)
 
     let td4 = tr.insertCell(3)
-    let textOrderTotalPrice = document.createTextNode(item.orderTotalPrice)
-    td4.appendChild(textOrderTotalPrice)
+    let textOrderStatus = document.createTextNode(item.statusNo)
+    td4.appendChild(textOrderStatus)
 
     let td5 = tr.insertCell(4)
-    td5.appendChild(editButton)
-    td5.appendChild(deleteButton)
+    let textOrderTotalPrice = document.createTextNode(item.orderTotalPrice)
+    td5.appendChild(textOrderTotalPrice)
+
+    let td6 = tr.insertCell(5)
+    td6.appendChild(editButton)
+    td6.appendChild(deleteButton)
   })
 
   orders = data
