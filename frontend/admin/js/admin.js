@@ -344,7 +344,7 @@ function _displayOrdersItems(data) {
     td1.appendChild(textOrderNumber)
 
     let td2 = tr.insertCell(1)
-    let textUserID = document.createTextNode(item.userID)
+    let textUserID = document.createTextNode(item.userId)
     td2.appendChild(textUserID)
 
     let td3 = tr.insertCell(2)
