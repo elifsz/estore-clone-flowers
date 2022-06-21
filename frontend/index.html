@@ -79,7 +79,10 @@
               <div class="login_menu">
                 <ul>
                   <li>
-                    <a href="admin/order_management.html">
+                    <a
+                      href="#trackOrderModal"
+                      data-toggle="modal"
+                    >
                       <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                       <span class="padding_10">Track Order</span>
                     </a>
@@ -146,6 +149,26 @@
         </div>
       </div>
     </div>
+    <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
     <!-- banner bg main end -->
     <!-- electronic section start -->
     <div class="fashion_section">
@@ -202,6 +225,61 @@
           © 2020 All Rights Reserved.
           <a href="https://html.design"></a>
         </p>
+      </div>
+    </div>
+
+    <div id="trackOrderModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form
+            action="javascript:void(0);"
+            method="GET"
+            onsubmit="trackOrder()"
+          >
+            <div class="modal-header">
+              <h4 class="modal-title">Track Order</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>User Mail</label>
+                <input
+                  type="text"
+                  id="trackOrder-email"
+                  placeholder="Enter Email"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Order No</label>
+                <input
+                  type="text"
+                  id="trackOrder-no"
+                  placeholder="Enter Order No"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                value="Cancel"
+              />
+              <input type="submit" class="btn btn-success" value="Track Order" />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <!-- copyright section end -->

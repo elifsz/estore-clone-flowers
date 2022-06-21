@@ -304,3 +304,11 @@ function _displayLogin(data) {
   var url = `http://localhost:3000/users/${userUrl}`;
   window.location.assign(url);
 }
+
+//Track Order Part
+function trackOrder(){
+  var trackOrderNo = $("#trackOrder-no").val();
+  var trackOrderEmail = $("#trackOrder-email").val();
+  console.log("trackOrderNo" + trackOrderNo+"trackOrderEmail"+trackOrderEmail);
+  var uriTrackOrder = `https://localhost:7225/api/Orders/track?orderId=${trackOrderNo}`;
+}
