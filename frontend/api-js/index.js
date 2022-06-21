@@ -3,16 +3,18 @@ const uriflowersByCategoryNo =
   "https://localhost:7225/api/Flowers/filter?categoryNo=2";
 const uriflowersByCategoryNoWedding =
   "https://localhost:7225/api/Flowers/filter?categoryNo=1";
-/*const uriFlower =
-  "https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";*/
-const uriFlower = "https://localhost:7225/api/Flowers/d16f59ab-9ae2-4ff7-a7a5-01834ca6ea5d";
+const uriFlower ="https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";
+//const uriFlower = "https://localhost:7225/api/Flowers/d16f59ab-9ae2-4ff7-a7a5-01834ca6ea5d";
 const uriFlowers = "https://localhost:7225/api/Flowers";
 const orderurl = "https://localhost:7225/api/OrderDetails";
 const uriLogin = "https://localhost:7225/api/Users/login?email&password"
+
+
 let categories = [];
 let flowersByCategoryNo = [];
 let flowersByCategoryNoWedding = [];
 let flowers = [];
+let trackOrders = [];
 
 function getFlower() {
   fetch(uriFlower)
@@ -20,6 +22,24 @@ function getFlower() {
     .then((data) => _displayFlower(data))
     .catch((error) => console.error("Unable to get books.", error));
 }
+
+function getTrackOrder() {
+  var trackOrderNo = $("#trackOrder-no").val();
+  var trackOrderEmail = $("#trackOrder-email").val();
+  console.log("trackOrderNo" + trackOrderNo+"trackOrderEmail"+trackOrderEmail);
+
+  var uriTrackOrder = `https://localhost:7225/api/OrderLists/trackorder?email=${trackOrderEmail}&orderno=${trackOrderNo}`
+  console.log(uriTrackOrder)
+  fetch(uriTrackOrder).then((res)=>{
+    return res.text();
+  }).then((text)=>{
+   console.log(text)
+   _displayTrackOrder(text)
+  })
+  
+  
+}
+
 
 function getflowerItems() {
 
@@ -57,6 +77,24 @@ function getCategory() {
     .then((data) => _displayItemsforCategory(data))
     .catch((error) => console.error("Unable to get books.", error));
   console.log(categories);
+}
+
+function _displayTrackOrder(data) {
+  const trackOrderInfo = data;
+  let trackOrderHtml = `
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <p class="text">
+      ${trackOrderInfo}
+      </p>
+  </div>    
+</div>
+`
+  document
+    .querySelector("#trackOrderModal")
+    .insertAdjacentHTML("afterbegin", trackOrderHtml);
+   
+    console.log("display");
 }
 
 function _displayFlower(data) {
@@ -303,12 +341,4 @@ function _displayLogin(data) {
   userUrl = userUrl.toLowerCase();
   var url = `http://localhost:3000/users/${userUrl}`;
   window.location.assign(url);
-}
-
-//Track Order Part
-function trackOrder(){
-  var trackOrderNo = $("#trackOrder-no").val();
-  var trackOrderEmail = $("#trackOrder-email").val();
-  console.log("trackOrderNo" + trackOrderNo+"trackOrderEmail"+trackOrderEmail);
-  var uriTrackOrder = `https://localhost:7225/api/Orders/track?orderListId=${trackOrderNo}`;
 }

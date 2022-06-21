@@ -49,6 +49,39 @@ namespace e_store_flowers_api.Controllers
             return orderList;
         }
 
+
+        [HttpGet("trackorder")]
+        public async Task<ActionResult<string>> TrackOrder(String email, int orderNo)
+        {
+            if (_context.Users == null)
+            {
+                return Problem("Entity set 'flower_etrade_dbContext.Users' is null.");
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.OrderLists.FirstOrDefaultAsync(o => o.OrderNumber == orderNo);
+
+            if (order.OrderNumber != orderNo)
+            {
+                return NotFound();
+            }
+
+            var status = await _context.Statuses.FirstOrDefaultAsync(u => u.StatusNo == order.StatusNo);
+
+
+
+            return status.StatusName;
+           
+
+        }
+
+
         // PUT: api/OrderLists/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
