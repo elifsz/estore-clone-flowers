@@ -37,5 +37,19 @@ namespace e_store_flowers_api.Controllers
 
             return status;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Status>>> GetAllStatus()
+        {
+            if (_context.Statuses == null)
+            {
+                return NotFound();
+            }
+
+            return await _context.Statuses.ToListAsync();
+        }
+
+
+
     }
 }

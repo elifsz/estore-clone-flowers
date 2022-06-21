@@ -10,6 +10,7 @@ namespace e_store_flowers_api.Models
             OrderDetails = new HashSet<OrderDetail>();
         }
 
+
         public Guid OrderListId { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal OrderTotalPrice { get; set; }
@@ -19,9 +20,11 @@ namespace e_store_flowers_api.Models
         public Guid? ShipperId { get; set; }
         public DateTime? PaymentDate { get; set; }
         public int? PaymentTypeId { get; set; }
-        public string? AddressId { get; set; } = null!;
-        public string? AddressDetails { get; set; } = null!;
+        public string? AddressId { get; set; } 
+        public string? AddressDetails { get; set; }
         public int? OrderNumber { get; set; }
+
+
 
         public virtual Address? Address { get; set; } = null!;
         public virtual Payment? PaymentType { get; set; } = null!;

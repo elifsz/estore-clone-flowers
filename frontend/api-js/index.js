@@ -310,5 +310,5 @@ function trackOrder(){
   var trackOrderNo = $("#trackOrder-no").val();
   var trackOrderEmail = $("#trackOrder-email").val();
   console.log("trackOrderNo" + trackOrderNo+"trackOrderEmail"+trackOrderEmail);
-  var uriTrackOrder = `https://localhost:7225/api/Orders/track?orderId=${trackOrderNo}`;
+  var uriTrackOrder = `https://localhost:7225/api/Orders/track?orderListId=${trackOrderNo}`;
 }

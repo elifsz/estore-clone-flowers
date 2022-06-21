@@ -1,14 +1,15 @@
 const uriFlowers = 'https://localhost:7225/api/Flowers'
 const uriOrders = 'https://localhost:7225/api/OrderLists'
 const uriCategory = 'https://localhost:7225/api/Categories'
-const uriStatus = 'https://localhost:7225/api/Status/1'
+
 let editFlowerId = ''
 let deleteFlowerId = ''
 let flowers = []
 let categories = []
-let editOrderId = ''
-let deleteOrderId = ''
+let editorderListId = ''
+let deleteorderListId = ''
 let orders = []
+let statuses = []
 
 
 function getCategory() {
@@ -31,8 +32,9 @@ function getflowerItems() {
     .catch((error) => console.error('Unable to get flowers.', error))
 }
 
-function getStatus() {
-  fetch(uriStatus)
+function getStatus(statusNo) {
+  var uriStatus = 'https://localhost:7225/api/Status'  
+  fetch(`${uriStatus}`)
     .then((response) => response.json())
     .then((data) => _displayStatus(data))
     .catch((error) => console.error('Unable to get status.', error))
@@ -100,7 +102,7 @@ function deleteflowerItem() {
 function deleteOrderItem() {
   //const element = document.getElementById('delete-flower');
   // let itemId = document.getElementById('delete-flower').getAttribute('delete-flower-id');
-  let itemId = deleteOrderId
+  let itemId = deleteorderListId
   fetch(`${uriFlowers}/${itemId}`, {
     method: 'DELETE',
   })
@@ -109,11 +111,12 @@ function deleteOrderItem() {
 }
 
 function _displayStatus(data) {
+  statuses = data
   console.log(data);
   console.log("status")
-  var status = `${data.statusName}`;
+  var status = `${data[0].statusName}`;
   console.log(status);
-
+  return data;
 }
 
 function displayDeleteForm(id) {
@@ -125,29 +128,25 @@ function displayDeleteForm(id) {
 }
 
 function displayOrderDeleteForm(id) {
-  deleteOrderId = id
-  const item = orders.find((item) => item.orderId === id)
+  deleteorderListId = id
+  const item = orders.find((item) => item.orderListId === id)
   document
     .getElementById('delete-order')
-    .getAttribute('delete-order-id') = item.orderId
+    .getAttribute('delete-order-id') = item.orderListId
 }
 
 function displayEditForm(id) {
   const item = flowers.find((item) => item.flowerId === id)
   editFlowerId = id
 
-  document.getElementById('edit-status').value = item.statusValue
-
 }
 
 function displayOrderEditForm(id) {
-  const item = orders.find((item) => item.orderId === id)
-  editOrderId = id
-
-  document.getElementById('edit-ordernumber').value = item.ordernumber
-  document.getElementById('edit-userıd').value = item.userıd
-  document.getElementById('edit-orderdate').value = item.orderdate
-  document.getElementById('edit-orderTotalPrice').value = item.orderTotalPrice
+  const item = orders.find((item) => item.orderListId === id)
+  editorderListId = id
+  console.log(item.orderListId)
+  console.log("edirorderListId" + editorderListId)
+  document.getElementById('edit-status').value = item.statusNo
 
 }
 
@@ -166,6 +165,8 @@ function updateflowerItem() {
     flowerDescription: document.getElementById('edit-description').value.trim(),
   }
 
+  
+  
   fetch(`${uriFlowers}/${itemId}`, {
     method: 'PUT',
     headers: {
@@ -182,14 +183,24 @@ function updateflowerItem() {
 
 
 function updateorderItem() {
-  let itemId = editOrderId
+  let itemId = editorderListId
   var select = document.getElementById('edit-status');
   var statusValue = select.options[select.selectedIndex].text;
-  console.log(statusValue);
+  var statusIndex = select.selectedIndex + 1;
+  const order = orders.find((order) => order.orderListId === itemId)
+  console.log(orders)
+  console.log(order)
+
   const item = {
-    orderId: itemId,
-    orderstatus: statusValue
+    orderListId: itemId,
+    statusNo: statusIndex,
+    orderNumber: order.orderNumber,
+    userId: order.userId,
+    orderDate: order.orderDate,
+    orderTotalPrice: order.orderTotalPrice
   }
+
+  console.log(JSON.stringify(item))
 
   fetch(`${uriOrders}/${itemId}`, {
     method: 'PUT',
@@ -310,6 +321,7 @@ function _displayItems(data) {
 function _displayOrdersItems(data) {
   console.log(data)
   getCategory();
+  getStatus();
   const tBody = document.getElementById('orders')
   tBody.innerHTML = ''
   _displayCount(data.length)
@@ -320,17 +332,17 @@ function _displayOrdersItems(data) {
     editButton.href = '#editorderModal'
     editButton.className = 'edit'
     editButton.id = 'edit-order'
-    editButton.setAttribute('onclick', `displayEditForm(${item.orderId})`)
+    editButton.setAttribute('onclick', `displayEditForm(${item.orderListId})`)
     editButton.addEventListener(
       'click',
       function () {
-        displayEditForm(item.orderId)
+        displayOrderEditForm(item.orderListId)
       },
       false,
     )
 
     editButton.setAttribute('data-toggle', 'modal')
-    editButton.setAttribute('edit-order-id', `${item.orderId}`)
+    editButton.setAttribute('edit-order-id', `${item.orderListId}`)
 
     editButton.innerHTML =
       "<i class='material-icons' data-toggle='tooltip' title='Edit'>&#xE254;</i>"
@@ -339,17 +351,17 @@ function _displayOrdersItems(data) {
     deleteButton.href = '#deleteorderModal'
     deleteButton.className = 'delete'
     deleteButton.id = 'delete-order'
-    deleteButton.setAttribute('onclick', `displayDeleteForm(${item.orderId})`)
+    deleteButton.setAttribute('onclick', `displayDeleteForm(${item.orderListId})`)
     deleteButton.addEventListener(
       'click',
       function () {
-        displayDeleteForm(item.orderId)
+        displayDeleteForm(item.orderListId)
       },
       false,
     )
 
     deleteButton.setAttribute('data-toggle', 'modal')
-    deleteButton.setAttribute('delete-order-id', `${item.orderId}`)
+    deleteButton.setAttribute('delete-order-id', `${item.orderListId}`)
 
     deleteButton.innerHTML =
       "<i class='material-icons' data-toggle='tooltip' title='Delete'>&#xE872;</i>"
@@ -368,9 +380,28 @@ function _displayOrdersItems(data) {
     let textOrderDate = document.createTextNode(item.orderDate)
     td3.appendChild(textOrderDate)
 
+
+    
     let td4 = tr.insertCell(3)
-    let textOrderStatus = document.createTextNode(item.statusNo)
+   
+    let statusName = 'default'
+
+    console.log("tablo yeri" + statuses[0])
+
+    for (let i = 0; i < statuses.length; i++) {
+
+      if (statuses[i].statusNo == item.statusNo) {
+
+        statusName = statuses[i].statusName
+
+      }
+
+    }
+
+    let textOrderStatus = document.createTextNode(statusName)
     td4.appendChild(textOrderStatus)
+    
+
 
     let td5 = tr.insertCell(4)
     let textOrderTotalPrice = document.createTextNode(item.orderTotalPrice)
