@@ -119,13 +119,8 @@ function displayEditForm(id) {
   const item = flowers.find((item) => item.flowerId === id)
   editFlowerId = id
 
-  document.getElementById('edit-name').value = item.flowerName
-  document.getElementById('edit-price').value = item.price
-  document.getElementById('edit-image').value = item.image
-  document.getElementById('edit-stock').value = item.stock
-  document.getElementById('edit-category').value = item.categoryNo
-  document.getElementById('edit-delivery').value = item.deliveryTime
-  document.getElementById('edit-description').value = item.flowerDescription
+  document.getElementById('edit-status').value = item.statusValue
+
 }
 
 function displayOrderEditForm(id) {
@@ -171,12 +166,12 @@ function updateflowerItem() {
 
 function updateorderItem() {
   let itemId = editOrderId
+  var select = document.getElementById('edit-status');
+  var statusValue = select.options[select.selectedIndex].text;
+  console.log(statusValue);
   const item = {
     orderId: itemId,
-    ordernumber: parseInt(document.getElementById('edit-ordernumber').value.trim()),
-    userıd: parseInt(document.getElementById('edit-userıd').value.trim()),
-    orderdate: document.getElementById('edit-orderdate').value.trim(),
-    orderTotalPrice: parseInt(document.getElementById('edit-orderTotalPrice').value.trim()),
+    orderstatus: statusValue
   }
 
   fetch(`${uriOrders}/${itemId}`, {
