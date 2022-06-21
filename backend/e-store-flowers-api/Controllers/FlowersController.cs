@@ -27,6 +27,17 @@ namespace e_store_flowers_api.Controllers
             return await query.ToListAsync();
         }
 
+        [HttpGet("detailFlower")]
+        public async Task<ActionResult<IEnumerable<Flower>>> DetailFlower(string detailFlowerName)
+        {
+            IQueryable<Flower> query = _context.Flowers;
+
+            if (!string.IsNullOrEmpty(detailFlowerName))
+            {
+                query = query.Where(e => e.FlowerName.Contains(detailFlowerName));
+            }
+            return await query.ToListAsync();
+        }
 
         [HttpGet("filter")]
         public async Task<ActionResult<IEnumerable<Flower>>> FilterCategory(int categoryNo)
