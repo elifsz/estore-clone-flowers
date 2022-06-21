@@ -31,6 +31,7 @@ function getflowerItems() {
 }
 
 function getorderItems() {
+  console.log("order")
   fetch(uriOrders)
     .then((response) => response.json())
     .then((data) => _displayOrdersItems(data))
