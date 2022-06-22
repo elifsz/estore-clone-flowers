@@ -30,13 +30,13 @@
         <div class="table-title">
           <div class="row">
             <div class="col-sm-6">
+              <a href="../index.html">
+                <img src="images/logoflower.png" />
+              </a>
               <h2>
                 Card
                 <b>Details</b>
               </h2>
-              <a href="../index.html">
-                <img src="../images/iris (1).png" />
-              </a>
             </div>
           </div>
         </div>
@@ -53,9 +53,57 @@
         </table>
         <div class="clearfix">
           <div id="counter" class="hint-text"></div>
+          <button class="btn btn-success" id="buy_cart" onclick="buyOrder()">
+            Buy
+          </button>
         </div>
       </div>
     </div>
+    <!-- Edit Modal HTML -->
+    <div id="editCartModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="javascript:void(0);" onsubmit="editOrderItem()">
+            <input type="hidden" id="edit-cart-id" />
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Order</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Quantity</label>
+                <input
+                  type="number"
+                  min="1"
+                  max="10"
+                  id="edit-quantity"
+                  class="form-control"
+                  value="1"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                value="Cancel"
+              />
+              <input type="submit" class="btn btn-info" value="Save" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <div id="deleteCartModal" class="modal fade">
       <input type="hidden" id="delete-cart-id" />
       <div class="modal-dialog">
@@ -94,6 +142,14 @@
     <script src="api-js/index.js" asp-append-version="true"></script>
     <script type="text/javascript">
       getOrderDetails()
+
+      $('#deleteCartModal').submit(function () {
+        $('#deleteCartModal').modal('hide')
+      })
+      $('#editCartModal').submit(function () {
+        $('#editCartModal').modal('hide')
+      })
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </body>
 </html>
