@@ -32,6 +32,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ## Cart Detail Page
 ![cart](https://user-images.githubusercontent.com/44908865/175097934-c6ba8433-ad4d-4d42-b143-48f92ccd9d0a.PNG)
 
+## Track Order Page
+
+![track_order](https://user-images.githubusercontent.com/44908865/175098177-376ea520-b7d3-4ca5-bb04-e77052c5de0d.PNG)
+
 
 
 
