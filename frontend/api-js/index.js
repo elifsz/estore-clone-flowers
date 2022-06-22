@@ -20,7 +20,7 @@ function getFlower() {
   fetch(uriFlower)
     .then((response) => response.json())
     .then((data) => _displayFlower(data))
-    .catch((error) => console.error("Unable to get books.", error));
+    .catch((error) => console.error("Unable to get flower.", error));
 }
 
 function getTrackOrder() {
@@ -42,17 +42,14 @@ function getTrackOrder() {
 
 
 function getflowerItems() {
-
   fetch(uriFlowers)
     .then((response) => response.json())
     .then((data) => _setFlowerItems(data))
     .catch((error) => console.error('Unable to get flowers.', error))
-
 }
 
 function _setFlowerItems(data) {
   flowers = data;
-  console.log(flowers+"benü");
 }
 
 function getflowersByCategoryNo() {
@@ -102,33 +99,36 @@ function _displayFlower(data) {
   let flowerHtml = `
   <div class="col-lg-25 col-sm-5">
   <div class="box_main" >
-
       <div class="electronic_img">
       <img src="../images/gul.jpg" />
       </div>
       <div class="btn_main">
       </div>
-</div>
-</div>
-</br> 
-<div class="col-lg-35 col-sm-5">
-<h4 class="shirt_text"> </br>  </br>  ${flowerInfo.flowerName}</h4> </br> </br>
-<p class="price_text">
-${flowerInfo.flowerDescription} <br/> <br/>
-Price: ${flowerInfo.price} $ <br/> <br/>
-Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/></p>
-<div><button class="buy_bt" id="buynow">Buy Now<button/></div>
-</div>
-</div> `;
+      </div>
+      </div>
+      </br> 
+      <div class="col-lg-35 col-sm-5">
+      <h4 class="shirt_text"> </br>  </br>  ${flowerInfo.flowerName}</h4> </br> </br>
+      <p class="price_text">
+      ${flowerInfo.flowerDescription} <br/> <br/>
+      Price: ${flowerInfo.price} $ <br/> <br/>
+      Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/></p>
+      <div><button class="btn btn-success" id="buynow" style="position: absolute; right: 0;">Buy Now<button/></div>
+    </div>
+      </div>
+      </div> `;
 
   document
     .querySelector("#flower")
     .insertAdjacentHTML("afterbegin", flowerHtml);
     document.getElementById("buynow").setAttribute('onclick',`addCart("${flowerInfo.flowerId}")`);
-    console.log(flowerInfo.flowerId);
+    
 }
+
 let  cart_url_flower;
 function addCart(id) {
+  Swal("Added to cart");
+
   cart_url_flower = uriFlowers + "/" + id;
   fetch(cart_url_flower)
     .then((response) => response.json())
@@ -196,6 +196,7 @@ function _displayItemsforCategory(data) {
   categories = data;
   let categoryHtml = "";
   for (let i = 0; i < categories.length; i++) {
+    let catogoryName = categories[i].categoryName.toLowerCase();
     categoryHtml += `
                 <div class="col-lg-4 col-sm-4">
                 <div class="box_main" >
@@ -208,7 +209,7 @@ function _displayItemsforCategory(data) {
                     </div>
                     <div class="btn_main">
                     <div class="buy_bt"><a href="#">Buy Now</a></div>
-                    <div class="seemore_bt"><a href="categories/${categories[i].categoryName}_category.html">See More</a></div>
+                    <div class="seemore_bt"><a href="categories/${catogoryName}_category.html">See More</a></div>
                     </div>
             </div>
             </div>
