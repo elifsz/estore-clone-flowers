@@ -1,4 +1,5 @@
-const localhost = 'https://localhost:7225/api/'
+const localhost = 'http://localhost:8080/api/'
+
 
 const uriFlowers = localhost + 'Flowers'
 const uriCategory = localhost + 'Categories'

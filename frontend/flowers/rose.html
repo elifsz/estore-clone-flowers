@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="../css/style.css">
         <!-- Responsive-->
         <link rel="stylesheet" href="../css/responsive.css">
+        
         <!-- Scrollbar Custom CSS -->
         <link rel="stylesheet" href="../css/jquery.mCustomScrollbar.min.css">
         <!-- Tweaks for older IEs-->
@@ -132,12 +133,12 @@
           <div class="col-sm-12">
             <div class="row">
               <div class="input-group">
-                <input
+                <div class="input-group-append">
+                  <input
                   type="text"
                   class="form-control"
-                  placeholder="Search this blog"
+                  placeholder="Search flower"
                 />
-                <div class="input-group-append">
                   <button id="searchButton"
                     class="btn btn-secondary"
                     type="button"
@@ -158,5 +159,6 @@
         getFlower()
       </script>
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <script src="../api-js/cart.js" asp-append-version="true"></script>
   </body>
 </html>

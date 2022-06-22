@@ -1,22 +1,27 @@
-const uriCategory = 'https://localhost:7225/api/Categories'
-const uriflowersByCategoryNo =
-  'https://localhost:7225/api/Flowers/filter?categoryNo=2'
-const uriflowersByCategoryNoWedding =
-  'https://localhost:7225/api/Flowers/filter?categoryNo=1'
-//const uriFlower ="https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";
-const uriFlower =
-  'https://localhost:7225/api/Flowers/d16f59ab-9ae2-4ff7-a7a5-01834ca6ea5d'
-const uriFlowers = 'https://localhost:7225/api/Flowers'
-const orderurl = 'https://localhost:7225/api/OrderDetails'
-const uriLogin = 'https://localhost:7225/api/Users/login?email&password'
-const uriOrderDetails = 'https://localhost:7225/api/OrderDetails'
+const localhost = 'http://localhost:8080/api/'
+
+const uriCategory = localhost + 'Categories'
+const uriflowersByCategoryNo = localhost + 'Flowers/filter?categoryNo=2'
+const uriflowersByCategoryNoWedding = localhost + 'Flowers/filter?categoryNo=1'
+//const uriFlower ="http://localhost:8080/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";
+const uriFlower = localhost + 'Flowers/d16f59ab-9ae2-4ff7-a7a5-01834ca6ea5d'
+const uriFlowers = localhost + 'Flowers'
+const orderurl = localhost + 'OrderDetails'
+const uriOrderDetails = localhost + 'OrderDetails'
+
 let categories = []
 let flowersByCategoryNo = []
 let flowersByCategoryNoWedding = []
 let flowers = []
 let trackOrders = []
 let orderDetails = []
+let cart_url_flower = ''
+
 let deleteOrderDetailId = ''
+let editOrderDetailId = ''
+let OrderListId = 'e6437e80-a264-463b-aee7-a36a0eec9e0a'
+let flowerName = ''
+const orderedFlowerIndex = []
 
 function getFlower() {
   fetch(uriFlower)
@@ -28,11 +33,8 @@ function getFlower() {
 function getTrackOrder() {
   var trackOrderNo = $('#trackOrder-no').val()
   var trackOrderEmail = $('#trackOrder-email').val()
-  console.log(
-    'trackOrderNo' + trackOrderNo + 'trackOrderEmail' + trackOrderEmail,
-  )
 
-  var uriTrackOrder = `https://localhost:7225/api/OrderLists/trackorder?email=${trackOrderEmail}&orderno=${trackOrderNo}`
+  var uriTrackOrder = `${localhost}OrderLists/trackorder?email=${trackOrderEmail}&orderno=${trackOrderNo}`
   console.log(uriTrackOrder)
   fetch(uriTrackOrder)
     .then((res) => {
@@ -116,7 +118,7 @@ function _displayFlower(data) {
       ${flowerInfo.flowerDescription} <br/> <br/>
       Price: ${flowerInfo.price} $ <br/> <br/>
       Delivery Time:  ${flowerInfo.deliveryTime}  <br/> <br/></p>
-      <div><button class="btn btn-success" id="buynow" style="position: absolute; right: 0;">Buy Now<button/></div>
+      <div><button class="btn btn-success" id="buynow" style="position: absolute; right: 0;">Add to Cart</button></div>
     </div>
       </div>
       </div> `
@@ -127,18 +129,17 @@ function _displayFlower(data) {
     .setAttribute('onclick', `addCart("${flowerInfo.flowerId}")`)
 }
 
-let cart_url_flower
 function addCart(id) {
   getflowerItems()
-
   cart_url_flower = uriFlowers + '/' + id
   fetch(cart_url_flower)
     .then((response) => response.json())
-    .then((data) => addingCart(data))
+    .then((data) => {
+      addingCart(data)
+    })
     .catch((error) => console.error('Unable to get flowers.', error))
-
-  swal('Added to cart', '', 'success')
 }
+
 function createUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = (Math.random() * 16) | 0,
@@ -148,50 +149,106 @@ function createUUID() {
 }
 
 function addingCart(data) {
-  console.log('çiçeekk' + flowers[0].flowerName)
-  let index =  Math.floor((Math.random() * flowers.length) + 0);
-  let randomFlower = flowers[index];
-  const item = {
-    orderDetailsId: createUUID(),
-    FlowerId: randomFlower.flowerId,
-    FlowerPrice: randomFlower.price,
-    FlowerQuantity: 1,
-    TotalPrice: data.price,
-    OrderListId: 'e6437e80-a264-463b-aee7-a36a0eec9e0a',
-  }
+  let index = Math.floor(Math.random() * flowers.length + 0)
+  let randomFlower = flowers[index]
+  if (!orderedFlowerIndex.includes(index)) {
+    orderedFlowerIndex.push(index)
 
-  console.log(JSON.stringify(item))
-  fetch(orderurl, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(item),
-  })
-    .then((response) => response.json())
-    .then(() => {
-      getOrderDetails()
+    const item = {
+      orderDetailsId: createUUID(),
+      FlowerId: randomFlower.flowerId,
+      FlowerPrice: randomFlower.price,
+      FlowerQuantity: 1,
+      TotalPrice: data.price,
+      OrderListId: OrderListId,
+    }
+
+    fetch(orderurl, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(item),
     })
-    .catch((error) => console.error('Unable to add flower.', error))
+      .then((response) => response.json())
+      .then(() => {
+        swal('Added to cart', '', 'success')
+        getOrderDetails()
+      })
+      .catch((error) => console.error('Unable to add flower.', error))
+  } else {
+    swal('Already in cart', '', 'error')
+  }
 }
 
 function getOrderDetails() {
-  fetch('https://localhost:7225/api/OrderDetails')
+  fetch(localhost + 'OrderDetails')
     .then((response) => response.json())
     .then((data) => _displayOrderDetails(data))
     .catch((error) => console.error('Unable to get books.', error))
+}
+
+function getFlowerNameById(id) {
+  fetch(localhost + 'Flowers/' + id)
+    .then((response) => response.json())
+    .then((data) => _setFlowerName(data))
+    .catch((error) => console.error('Unable to get flower.', error))
+}
+
+
+function _setFlowerName(data) {
+  flowerName = data.flowerName
+}
+
+function setFlowerNameArea(id) {
+  var flowerName = ''
+  fetch(localhost + 'Flowers/' + id)
+    .then((response) => response.json())
+    .then((data) => {
+      flowerName = data.flowerName
+      console.log(flowerName)
+      var td1 = document.getElementById(`flower-${id}`)
+      var text = document.createTextNode(flowerName)
+      td1.appendChild(text)
+    })
+    .catch((error) => console.error('Unable to get flower.', error))
 }
 
 function _displayOrderDetails(data) {
   const tBody = document.getElementById('card_details')
   tBody.innerHTML = ''
   data.forEach((item) => {
+    let editButton = document.createElement('a')
+    editButton.href = '#editCartModal'
+    editButton.className = 'edit'
+    editButton.id = 'edit-order'
+    editButton.setAttribute(
+      'onclick',
+      `displayEditCartForm(${item.orderDetailsId})`,
+    )
+    editButton.addEventListener(
+      'click',
+      function () {
+        displayEditCartForm(item.orderDetailsId)
+      },
+      false,
+    )
+
+    editButton.setAttribute('data-toggle', 'modal')
+    editButton.setAttribute('edit-flower-id', `${item.flowerId}`)
+
+    editButton.innerHTML =
+      "<i class='material-icons' data-toggle='tooltip' title='Edit'>&#xE254;</i>"
+
     let deleteButton = document.createElement('a')
     deleteButton.href = '#deleteCartModal'
     deleteButton.className = 'delete'
-    deleteButton.id = 'delete-cart-id'
-    deleteButton.setAttribute('onclick', `displayDeleteCartForm(${item.orderDetailsId})`)
+    deleteButton.id = 'delete-order'
+    deleteButton.setAttribute(
+      'onclick',
+      `displayDeleteCartForm(${item.orderDetailsId})`,
+    )
     deleteButton.addEventListener(
       'click',
       function () {
@@ -207,24 +264,28 @@ function _displayOrderDetails(data) {
       "<i class='material-icons' data-toggle='tooltip' title='Delete'>&#xE872;</i>"
 
     let tr = tBody.insertRow()
-    let td1 = tr.insertCell()
-    let flower = document.createTextNode(item.flowerId)
+    let td1 = tr.insertCell(0)
+    td1.setAttribute('id', `flower-${item.flowerId}`)
+    setFlowerNameArea(item.flowerId)
+    let flower = document.createTextNode('')
     td1.appendChild(flower)
 
-    let td2 = tr.insertCell()
+    let td2 = tr.insertCell(1)
     let flower2 = document.createTextNode(item.flowerPrice)
     td2.appendChild(flower2)
 
-    let td3 = tr.insertCell()
+    let td3 = tr.insertCell(2)
     let flower3 = document.createTextNode(item.flowerQuantity)
     td3.appendChild(flower3)
 
-    let td4 = tr.insertCell()
+    let td4 = tr.insertCell(3)
     let flower4 = document.createTextNode(item.totalPrice)
     td4.appendChild(flower4)
 
-    let td5 = tr.insertCell()
+    let td5 = tr.insertCell(4)
+    td5.appendChild(editButton)
     td5.appendChild(deleteButton)
+    
   })
 
   orderDetails = data
@@ -239,12 +300,45 @@ function deleteCartItem() {
     .catch((error) => console.error('Unable to delete cart.', error))
 }
 
+function editOrderItem(){
+  let itemId = editOrderDetailId
+  let quantity = document.getElementById('edit-quantity')
+  const itemFind= orderDetails.find((item) => item.orderDetailsId === itemId)
+  const item = {
+    orderDetailsId: itemFind.orderDetailsId,
+    FlowerId: itemFind.flowerId,
+    FlowerPrice: itemFind.price,
+    FlowerQuantity: parseInt(quantity.value),
+    TotalPrice: itemFind.price,
+    OrderListId: OrderListId,
+  }
+  fetch(`${uriOrderDetails}/${itemId}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(item),
+  })
+  .then(() => getOrderDetails())
+    .catch((error) => console.error('Unable to update item.', error))
+  
+}
+
 function displayDeleteCartForm(id) {
   deleteOrderDetailId = id
   const item = orderDetails.find((item) => item.orderDetailsId === id)
   document
-    .getElementById('delete-flower')
-    .getAttribute('delete-cart-id') = item.flowerId
+    .getElementById('delete-order')
+    .getAttribute('delete-cart-id') = item.orderDetailsId
+}
+
+function displayEditCartForm(id) {
+  editOrderDetailId = id
+  const item = orderDetails.find((item) => item.orderDetailsId === id)
+  document
+    .getElementById('edit-order')
+    .getAttribute('edit-cart-id') = item.orderDetailsId
 }
 
 function _displayItemsforCategory(data) {
@@ -344,7 +438,7 @@ function getFlowerFromCategory(categoryName) {
 }
 
 function getSearchFlower(searchInput) {
-  var uriSearch = 'https://localhost:7225/api/Flowers/search?flowerNameSearch'
+  var uriSearch = localhost + 'Flowers/search?flowerNameSearch'
   fetch(`${uriSearch}=${searchInput}`)
     .then((response) => response.json())
     .then((data) => _display(data))
@@ -352,33 +446,8 @@ function getSearchFlower(searchInput) {
 }
 
 function searchFlower() {
-  console.log('fffff')
   var searchInput = $('#searchId').val()
   getSearchFlower(searchInput)
-}
-
-function getLogin(email, password) {
-  var uriLogin = `https://localhost:7225/api/Users/login?email=${email}&password=${password}`
-
-  fetch(uriLogin)
-    .then((res) => {
-      return res.text()
-    })
-    .then((text) => {
-      if (text == 'admin') {
-        window.location.href = 'admin/flower_management.html'
-      } else if (text == 'user') {
-        window.location.href = 'index.html'
-      } else {
-        alert('Wrong email or password')
-      }
-    })
-}
-
-function login() {
-  var email = $('#user_email').val()
-  var password = $('#user_password').val()
-  getLogin(email, password)
 }
 
 function _display(data) {
@@ -389,10 +458,10 @@ function _display(data) {
   window.location.assign(url)
 }
 
-function _displayLogin(data) {
-  console.log(data)
-  var userUrl = `${data[0].email & data[0].password}`
-  userUrl = userUrl.toLowerCase()
-  var url = `http://localhost:3000/users/${userUrl}`
-  window.location.assign(url)
+function buyOrder() {
+  swal(
+    'Thank you for your order!',
+    'You will receive a confirmation email shortly.',
+    'success',
+  )
 }

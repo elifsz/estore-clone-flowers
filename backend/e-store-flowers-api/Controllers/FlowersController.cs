@@ -88,28 +88,29 @@ namespace e_store_flowers_api.Controllers
             return flower;
         }
 
-      /*  [HttpGet("get/{CategoryNo}")]
-        public async Task<ActionResult<Flower>> GetFlowerByCategoryId(int CategoryNo)
-        {
-            if (_context.Flowers == null)
-            {
-                return NotFound();
-            }
-            var flower = await _context.Flowers.FindAsync(CategoryNo);
 
-       
-            if (flower == null)
-            {
-                return NotFound();
-            }
+        /*  [HttpGet("get/{CategoryNo}")]
+          public async Task<ActionResult<Flower>> GetFlowerByCategoryId(int CategoryNo)
+          {
+              if (_context.Flowers == null)
+              {
+                  return NotFound();
+              }
+              var flower = await _context.Flowers.FindAsync(CategoryNo);
 
-            if(flower.CategoryNo == CategoryNo)
-            {
-                return flower;
-            }
 
-            return NotFound();
-        }*/
+              if (flower == null)
+              {
+                  return NotFound();
+              }
+
+              if(flower.CategoryNo == CategoryNo)
+              {
+                  return flower;
+              }
+
+              return NotFound();
+          }*/
 
 
         // PUT: api/Flowers/5

@@ -1,4 +1,5 @@
-const localhost = 'https://localhost:7225/api/'
+const localhost = 'http://localhost:8080/api/'
+
 
 const uriOrders = localhost + 'OrderLists'
 var uriStatus = localhost + 'Status'
@@ -10,7 +11,7 @@ let editOrderId = ''
 let deleteOrderId = ''
 
 function getStatus(statusNo) {
-  var uriStatus = 'https://localhost:7225/api/Status'  
+  var uriStatus = localhost+ 'Status'  
   fetch(`${uriStatus}`)
     .then((response) => response.json())
     .then((data) => _displayStatus(data))
@@ -157,8 +158,6 @@ function _displayOrdersItems(data) {
     let td4 = tr.insertCell(3)
    
     let statusName = 'default'
-
-    console.log("tablo yeri" + statuses[0])
 
     for (let i = 0; i < statuses.length; i++) {
 

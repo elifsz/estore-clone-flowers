@@ -10,11 +10,11 @@ services:
     backend:
       depends_on:
         - database_sql
-      image: 17050111056/e-store-flower-api
+      image: 17050111056/e-store-flower-api_v3
       ports:
         ["8080:80"]
     frontend:
-      image: 17050111056/e-store-flower-frontend
+      image: 17050111056/e-store-flower-frontend_v3
       ports:
         ["3000:3000"]
       depends_on:
