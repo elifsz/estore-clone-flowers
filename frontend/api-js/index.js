@@ -3,8 +3,8 @@ const uriflowersByCategoryNo =
   "https://localhost:7225/api/Flowers/filter?categoryNo=2";
 const uriflowersByCategoryNoWedding =
   "https://localhost:7225/api/Flowers/filter?categoryNo=1";
-const uriFlower ="https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";
-//const uriFlower = "https://localhost:7225/api/Flowers/d16f59ab-9ae2-4ff7-a7a5-01834ca6ea5d";
+//const uriFlower ="https://localhost:7225/api/Flowers/8d179247-897f-45d6-95e3-1786f74462b3";
+const uriFlower = "https://localhost:7225/api/Flowers/d16f59ab-9ae2-4ff7-a7a5-01834ca6ea5d";
 const uriFlowers = "https://localhost:7225/api/Flowers";
 const orderurl = "https://localhost:7225/api/OrderDetails";
 const uriLogin = "https://localhost:7225/api/Users/login?email&password"
@@ -127,7 +127,7 @@ function _displayFlower(data) {
 
 let  cart_url_flower;
 function addCart(id) {
-  Swal("Added to cart");
+  swal("Added to cart", "", "success");
 
   cart_url_flower = uriFlowers + "/" + id;
   fetch(cart_url_flower)
